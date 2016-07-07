@@ -8,6 +8,7 @@
             "ui.router",
             "ui.mask",
             "ui.bootstrap",
+            "angularCharts",
             "productResourceMock"]);
 
     app.config(["$stateProvider",
@@ -52,7 +53,6 @@
                         url: "/tags",
                         templateUrl: "app/products/productEditTagsView.html"
                     })
-
                     .state("productDetail", {
                         url: "/products/:productId",
                         templateUrl: "app/products/productDetailView.html",
@@ -66,7 +66,18 @@
                             }
                         }
                     })
+                    .state("priceAnalytics", {
+                        url: "/priceAnalytics",
+                        templateUrl:"app/prices/priceAnalyticsView.html",
+                        controller: "PriceAnalyticsCtrl",
+                        resolve: {
+                            productResource: "productResource",
 
+                            products: function (productResource) {
+                                return productResource.query().$promise;
+                            }
+                        }
+                    })
             }]
     );
 }());
